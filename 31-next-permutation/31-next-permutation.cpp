@@ -19,7 +19,7 @@ public:
             }
         }
         swap(nums[i], nums[l]);
-        sort(nums.begin() + 1 + i, nums.end());
+        reverse(nums.begin() + 1 + i, nums.end());
         
     }
 };
