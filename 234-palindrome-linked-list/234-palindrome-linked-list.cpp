@@ -10,18 +10,42 @@
  */
 class Solution {
 public:
-    bool isPalindrome(ListNode* head) {
-        vector<int> vect;
-        ListNode *temp = head;
-        while(temp!=NULL) {
-            vect.push_back(temp->val);
-            temp = temp->next;
+    
+    ListNode* reverseLL(ListNode *head) {
+        ListNode *prev = NULL;
+        ListNode *curr = head;
+        ListNode *nxt = NULL;
+        while(curr) {
+            nxt = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nxt;
         }
-        int n = vect.size();
-        for(int i=0; i<n/2; i++) {
-            if(vect[i] != vect[n-i-1]) {
+        return prev;
+    }
+    
+    bool isPalindrome(ListNode* head) {
+        if(head == NULL || head->next == NULL) {
+            return true;
+        }
+        ListNode *fastPtr = head, *slowPtr = head;
+        while(fastPtr->next && fastPtr->next->next) {
+            slowPtr = slowPtr->next;
+            fastPtr = fastPtr->next->next;
+        }
+        //now slowPtr contains the middle element
+        //I now want to reverse the linked list from the middle (inclusive) to the end
+        slowPtr->next = reverseLL(slowPtr->next);
+        // cout << slowPtr->val << endl; 
+
+        ListNode *newPtr = head;
+        slowPtr = slowPtr->next;
+        while(slowPtr) {
+            if(newPtr->val != slowPtr->val) {
                 return false;
             }
+            newPtr = newPtr->next;
+            slowPtr = slowPtr->next;
         }
         return true;
     }
