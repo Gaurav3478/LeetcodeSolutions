@@ -128,7 +128,7 @@ Node *merge(Node *a, Node *b) {
         result = b;
         result->bottom = merge(a, b->bottom);
     }
-    result->next = NULL;
+    // result->next = NULL;
     return result;
 }
 Node *flatten(Node *root)
@@ -136,7 +136,6 @@ Node *flatten(Node *root)
    // Your code here
    // we are given a linked list which contains regular pointers (to the next element) and a 'bottom' pointer
    // which is basically a sub linked list
-   Node *temp = root;
    // problem reduces to: given sorted linked lists, merge them!
    if(root == NULL || root->next == NULL) {
        return root;
