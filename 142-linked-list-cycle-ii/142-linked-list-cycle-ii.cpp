@@ -11,7 +11,6 @@ public:
     ListNode *detectCycle(ListNode *head) {
         map<ListNode *, int> mp;
         ListNode *temp = head;
-        int i = 0;
         while(temp) {
             if(mp[temp] > 0) {
                 return temp;
