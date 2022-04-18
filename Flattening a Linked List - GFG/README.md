@@ -1,5 +1,5 @@
 # Flattening a Linked List
-##  Medium 
+## Medium 
 <div class="problem-statement">
                 <p></p><p><span style="font-size:18px">Given a Linked List of size N, where every node represents a sub-linked-list and contains two pointers:<br>
 (i) a<strong> next </strong>pointer to the next node,<br>
