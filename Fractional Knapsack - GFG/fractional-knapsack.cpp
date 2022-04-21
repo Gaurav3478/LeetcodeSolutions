@@ -30,7 +30,7 @@ class Solution
         // Your code here
         vector<pair<Item, double>> vect(n);
         for(int i=0; i<n; i++) {
-            vect[i] = {arr[i], arr[i].value*1.0/arr[i].weight};
+            vect[i] = {arr[i], (double)arr[i].value/arr[i].weight};
         }
         sort(vect.begin(), vect.end(), cmp);
         double value = 0;
