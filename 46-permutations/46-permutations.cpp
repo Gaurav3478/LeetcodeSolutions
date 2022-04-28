@@ -1,31 +1,22 @@
-//this will be the solution using extra space
+//using no extra space (swapping)
 
 class Solution {
 public:
-    void solve(vector<vector<int>> &ans, vector<int> nums, vector<int> &ds, vector<int> temp, int n) {
-        if(ds.size() == n) {
-            ans.push_back(ds);
+    void solve(int index, vector<vector<int>> &ans, vector<int> nums, int n) {
+        if(index == n) {
+            ans.push_back(nums);
             return;
         }
-        for(int i = 0; i<n; i++) {
-            if(!temp[i]) {
-                temp[i] = 1;
-                ds.push_back(nums[i]);
-                solve(ans, nums, ds, temp, n);
-                temp[i] = 0;
-                ds.pop_back();
-            }
+        for(int i = index; i<n; i++) {
+            swap(nums[index], nums[i]);
+            solve(index + 1, ans, nums, n);
+            swap(nums[index], nums[i]);
         }
     }
     vector<vector<int>> permute(vector<int>& nums) {
         vector<vector<int>> ans;
-        vector<int> ds;
         int n = nums.size();
-        vector<int> temp(n);
-        // for(int i = 0; i<temp.size(); i++) {
-        //     temp[i] = 0;
-        // }
-        solve(ans, nums, ds, temp, n);
+        solve(0, ans, nums, n);
         return ans;
     }
 };
