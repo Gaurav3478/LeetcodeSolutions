@@ -5,24 +5,32 @@ using namespace std;
  // } Driver Code Ends
 class Solution{
 	public:
-		vector<string> AllPossibleStrings(string s){
-            //bit manipulation
-            vector<string> ans;
-            int n = s.size();
-            string sub;
-            for(int num = 1; num < (1<<n); num++) {
-                sub = "";
-                for(int i=0; i<n; i++) {
-                    if(num & (1<<i)) {
-                        sub += s[i];
-                    }
-                }
-                ans.push_back(sub);
-            }
-            sort(ans.begin(), ans.end());
-            return ans;
-
+		void solve(string s, vector<string> &ans, int index, string temp, int n) {
+    //at each point we can either take or not take the string
+    if(index == n) {
+        if(temp.size() > 0) {
+            ans.push_back(temp);
         }
+        return;
+    }
+    //first option: take the character
+    temp.push_back(s[index]);
+    solve(s, ans, index+1, temp, n);
+    //second option: don't take the character
+    temp.pop_back();
+    solve(s, ans, index+1, temp, n);
+}
+
+vector<string> AllPossibleStrings(string s){
+    //ye kya dogalapan hai
+    //we want to use recursion
+    vector<string> ans;
+    string temp;
+    int n = s.size();
+    solve(s, ans, 0, temp, n);
+    sort(ans.begin(), ans.end());
+    return ans;
+}
 };
 
 // { Driver Code Starts.
