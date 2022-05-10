@@ -1,6 +1,6 @@
 class MyStack {
 private:
-    queue<int> q;
+    queue<int> q, q2;
 public:
     MyStack() {
     }
@@ -8,8 +8,12 @@ public:
         int s = q.size();
         q.push(x);
         for (int i = 0; i < s; i++) {
-            q.push(q.front());
+            q2.push(q.front());
             q.pop();
+        }
+        for(int i=0; i<s; i++) {
+            q.push(q2.front());
+            q2.pop();
         }
     }
     
