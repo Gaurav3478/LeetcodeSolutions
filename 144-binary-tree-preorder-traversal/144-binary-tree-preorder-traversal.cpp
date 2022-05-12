@@ -21,18 +21,15 @@ public:
         stack<TreeNode *> st;
         st.push(root);
         while(!st.empty()) {
-            int size = st.size();
-            for(int i=0; i<size; i++) {
-                TreeNode *node = st.top();
-                st.pop();
-                if(node->right != NULL) {
-                    st.push(node->right);
-                } 
-                if(node->left != NULL) {
-                    st.push(node->left);
-                }
-                ans.push_back(node->val);
+            TreeNode *node = st.top();
+            st.pop();
+            if(node->right != NULL) {
+                st.push(node->right);
+            } 
+            if(node->left != NULL) {
+                st.push(node->left);
             }
+            ans.push_back(node->val);
         }
         return ans;
     }
