@@ -2,13 +2,13 @@ class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
         int n = nums.size();
-        int localMax = 0, globalMax = INT_MIN;
-        for(int i=0; i<n; i++) {
-            localMax = max(nums[i], localMax + nums[i]);
-            if(localMax > globalMax) {
-                globalMax = localMax;
-            }
+        vector<int> dp(n+1);
+        dp[0] = 0;
+        int ans = nums[0];
+        for(int i=1; i<=n; i++) {
+            dp[i] = nums[i-1] + (dp[i-1] > 0? dp[i-1]:0);
+            ans = max(dp[i], ans);
         }
-        return globalMax;
+        return ans;
     }
 };
