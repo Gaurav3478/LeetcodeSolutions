@@ -1,6 +1,8 @@
 class NumArray {
-public:
+private:
     vector<int> memo = {0};
+
+public:
     NumArray(vector<int> &nums) {
         int summ = 0;
         for (int n : nums) {
