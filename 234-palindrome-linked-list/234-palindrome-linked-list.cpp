@@ -10,43 +10,34 @@
  */
 class Solution {
 public:
-    
-    ListNode* reverseLL(ListNode *head) {
-        ListNode *prev = NULL;
-        ListNode *curr = head;
-        ListNode *nxt = NULL;
-        while(curr) {
-            nxt = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = nxt;
-        }
-        return prev;
-    }
-    
     bool isPalindrome(ListNode* head) {
-        if(head == NULL || head->next == NULL) {
+        if(head == NULL) {
+            return false;
+        }
+        ListNode *slow = head, *fast = head;
+        while(fast->next != NULL) {
+            if(fast->next->next == NULL) {
+                break;
+            }
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        ListNode *mid = slow->next;
+        bool flag = false;
+        ListNode *temp = head;
+        string s1 = "", s2 = "";
+        while(mid) {
+            s1 += temp->val;
+            s2 += mid->val;
+            temp = temp->next;
+            mid = mid->next;
+        }
+        reverse(s2.begin(), s2.end());
+        if(s1 != s2) {
+            return false;
+        }
+        else {
             return true;
         }
-        ListNode *fastPtr = head, *slowPtr = head;
-        while(fastPtr->next && fastPtr->next->next) {
-            slowPtr = slowPtr->next;
-            fastPtr = fastPtr->next->next;
-        }
-        //now slowPtr contains the middle element
-        //I now want to reverse the linked list from the middle (inclusive) to the end
-        slowPtr->next = reverseLL(slowPtr->next);
-        // cout << slowPtr->val << endl; 
-
-        ListNode *newPtr = head;
-        slowPtr = slowPtr->next;
-        while(slowPtr) {
-            if(newPtr->val != slowPtr->val) {
-                return false;
-            }
-            newPtr = newPtr->next;
-            slowPtr = slowPtr->next;
-        }
-        return true;
     }
 };
