@@ -12,6 +12,7 @@
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
+        //base
         if(root == NULL) {
             return 0;
         }
