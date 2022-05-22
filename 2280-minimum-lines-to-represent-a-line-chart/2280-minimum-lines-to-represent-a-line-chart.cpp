@@ -7,9 +7,9 @@ public:
       }
       sort(stockPrices.begin(), stockPrices.end());
       int ans = 1;
-      long double prevGrad = (stockPrices[1][1] - stockPrices[0][1])/(long double)(stockPrices[1][0] - stockPrices[0][0]);
+      long double prevGrad = (long double)(stockPrices[1][1] - stockPrices[0][1])/(stockPrices[1][0] - stockPrices[0][0]);
       for(int i=1; i<n-1; i++) {
-        long double curGrad = (stockPrices[i+1][1] - stockPrices[i][1])/(long double)(stockPrices[i+1][0] - stockPrices[i][0]);
+        long double curGrad = (long double)(stockPrices[i+1][1] - stockPrices[i][1])/(stockPrices[i+1][0] - stockPrices[i][0]);
         if(prevGrad != curGrad) {
           ans++;
         }
