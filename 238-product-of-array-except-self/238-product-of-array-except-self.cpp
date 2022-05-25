@@ -2,29 +2,41 @@ class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
         int n = nums.size();
-        int arr1[n], arr2[n];
-        arr1[0] = nums[0];
-        vector<int> ans;
-        for(int i=1; i<n; i++) {
-            arr1[i] = arr1[i-1]*nums[i];
-        }
-        arr2[n-1] = nums[n-1];
-        for(int i=n-2; i>=0; i--) {
-            arr2[i] = arr2[i+1]*nums[i];
-        }
+        vector<int> leftProduct(n), rightProduct(n);
         for(int i=0; i<n; i++) {
-            if(i == 0) {
-                // cout << arr2[1] << " ";
-                ans.push_back(arr2[1]);
-                continue;
+            if(i==0) {
+                leftProduct[i] = nums[i];
             }
-            if(i == n-1) {
-                // cout << arr1[n-2] << " ";
-                ans.push_back(arr1[n-2]);
-                continue;
+            else {
+                leftProduct[i] = leftProduct[i-1]*nums[i];
             }
-            // cout << arr1[i-1]*arr2[i+1] << " ";
-            ans.push_back(arr1[i-1]*arr2[i+1]);
+        }
+        for(int i=n-1; i>=0; i--) {
+            if(i==n-1) {
+                rightProduct[i] = nums[i];
+            }
+            else {
+                rightProduct[i] = rightProduct[i+1]*nums[i];
+            }
+        }
+        for(auto it: leftProduct) {
+            cout << it << " ";
+        }
+        cout << endl;
+        for(auto it: rightProduct) {
+            cout << it << " ";
+        }
+        vector<int> ans;
+        for(int i=0; i<n; i++) {
+            if(i==0) {
+                ans.push_back(rightProduct[1]);
+            }
+            else if(i==n-1) {
+                ans.push_back(leftProduct[n-2]);
+            }
+            else {
+                ans.push_back(leftProduct[i-1] * rightProduct[i+1]);
+            }
         }
         return ans;
     }
