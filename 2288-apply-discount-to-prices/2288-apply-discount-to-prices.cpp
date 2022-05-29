@@ -13,6 +13,7 @@ public:
         string ans = "", num = "";
         for(int i=0;i<nums.size();i++){
             if(nums[i] == '$' && (i==0 || nums[i-1]==' ')){
+                num = "";
                 ans += nums[i];
                 int j = i+1;
                 if(j >= nums.size()) return ans;
@@ -25,7 +26,6 @@ public:
                     ans += val;
                 }else{
                     ans += num;
-                    num = "";
                 }
                 i = j-1;
             }else{
