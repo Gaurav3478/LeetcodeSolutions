@@ -6,10 +6,10 @@ public:
             return;
         }
         //we take that index
-        solve(ans, index+1, temp, nums, n);
         temp.push_back(nums[index]);
         solve(ans, index+1, temp, nums, n);
         temp.pop_back();
+        solve(ans, index+1, temp, nums, n);
     }
 
     vector<vector<int>> subsets(vector<int>& nums) {
