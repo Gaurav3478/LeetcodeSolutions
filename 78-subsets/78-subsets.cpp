@@ -1,23 +1,20 @@
 class Solution {
 public:
-    void solve(vector<vector<int>> &ans, int index, vector<int> &temp, vector<int> nums, int n) {
-        if(index == n) {
-            ans.push_back(temp);
-            return;
-        }
-        //we take that index
-        temp.push_back(nums[index]);
-        solve(ans, index+1, temp, nums, n);
-        temp.pop_back();
-        solve(ans, index+1, temp, nums, n);
-    }
-
     vector<vector<int>> subsets(vector<int>& nums) {
-        //in general, we'll take then skip then take then skip
-        vector<vector<int>> ans;
-        vector<int> temp;
+        //try using bitmask
         int n = nums.size();
-        solve(ans, 0, temp, nums, n);
+        //=> 2^n subsets
+        vector<vector<int>> ans;
+        for(int i=0; i<1<<n; i++) {
+            //i is my bitmask 
+            vector<int> temp;
+            for(int j=0; j<n; j++) {
+                if(i & 1<<j) {
+                    temp.push_back(nums[j]);
+                }
+            }
+            ans.push_back(temp);
+        }
         return ans;
     }
 };
