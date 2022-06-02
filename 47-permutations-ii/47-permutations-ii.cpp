@@ -5,12 +5,12 @@ public:
             ans.push_back(nums);
             return;
         }
-        unordered_set<int> st;
+        unordered_map<int, int> st;
         for(int i=index; i<n; i++) {
             if(st.count(nums[i]) == 1) {
                 continue;
             }
-            st.insert(nums[i]);
+            st[nums[i]]++;
             swap(nums[index], nums[i]);
             solve(ans, index+1, nums, n);
             swap(nums[index], nums[i]);
