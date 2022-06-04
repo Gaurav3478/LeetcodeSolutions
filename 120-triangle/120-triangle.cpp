@@ -5,6 +5,7 @@ public:
         vector<vector<int>> dp(n);
         //dp[i][j] represents the minimum cost to get to that point
         for(int i=0; i<n; i++) {
+            dp[i].clear();
             dp[i].resize(triangle[i].size());
             for(int j=0; j<triangle[i].size(); j++) {
                 if(i==0 && j==0) {
