@@ -8,9 +8,7 @@ public:
             if(prices[i] < left) {
                 left = prices[i];
             }
-            else {
-                ans = max(ans, prices[i] - left);
-            }
+            ans = max(ans, prices[i] - left);
         }
         return ans;
     }
