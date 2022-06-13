@@ -8,9 +8,11 @@ public:
             for(int j=i-1; j>=0; j--) {
                 if(dp[j]) {
                     string temp = s.substr(j, i - j);
-                    if(find(wordDict.begin(), wordDict.end(), temp) != wordDict.end()) {
-                        dp[i] = true;
-                        break;
+                    for(auto it: wordDict) {
+                        if(it == temp) {
+                            dp[i] = true;
+                            break;
+                        }
                     }
                 }
             }
