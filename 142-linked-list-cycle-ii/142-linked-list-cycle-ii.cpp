@@ -9,15 +9,29 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        map<ListNode *, int> mp;
-        ListNode *temp = head;
-        while(temp) {
-            if(mp[temp] > 0) {
-                return temp;
-            }
-            mp[temp]++;
-            temp = temp->next;
+        //Floyd's algorithm
+        if(head == NULL) {
+            return NULL; 
         }
-        return NULL;
+        ListNode *slow = head, *fast = head;
+        while(slow != NULL && fast != NULL) {
+            slow = slow->next;
+            if(fast->next == NULL) {
+                return NULL;
+            }
+            fast = fast->next->next;
+            if(slow == fast) {
+                break;
+            }
+        }
+        if(slow != fast) {
+            return NULL;
+        }
+        slow = head;
+        while(slow != fast) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        return slow;
     }
 };
