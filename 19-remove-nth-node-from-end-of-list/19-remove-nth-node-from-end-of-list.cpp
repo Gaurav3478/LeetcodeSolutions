@@ -11,32 +11,31 @@
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
+        //count the number of nodes
+        //we have to remove the n'th node from the end. therefore we have to remove the (count - n'th) node from the start
+        //upon reaching that node, do the change
         ListNode *temp = head;
-        int count = 1;
-        while(temp!=nullptr && temp->next != nullptr) {
-            count++; 
-            temp = temp->next;
-        } 
-        if(count == 1) {
-            head = nullptr;
+        if(head == NULL) {
             return head;
         }
-        // cout << "count = " << count << endl;
-        int stopping_index = count-n+1;
-        int new_index = 1;
-        // cout << stopping_index;
+        int count = 1;
+        while(temp->next) {
+            temp = temp->next;
+            count++;
+        }
+        int k = count - n;
         temp = head;
-        if(stopping_index == new_index) {
+        if(k == 0) {
             return temp->next;
         }
-        while(temp->next!=nullptr) {
-            if(stopping_index-1 == new_index) {
-                temp->next = temp->next->next;
-                return head;
-            }
-            new_index++;
+        else {
+            k--;
+        }
+        while(k--) {
             temp = temp->next;
         }
+        temp->next = temp->next->next;
         return head;
     }
+    
 };
