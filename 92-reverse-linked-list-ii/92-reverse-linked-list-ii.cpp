@@ -1,29 +1,28 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
-    ListNode* reverseBetween(ListNode* head, int start, int end) {
-        if(!head || start == end) return head;
-        
-        ListNode dummyHead(INT_MIN);
-        dummyHead.next = head;
-        
-        auto* nodeBeforeReversedSublist = &dummyHead;
-        int pos = 1;
-        while(pos < start) {
-            nodeBeforeReversedSublist = nodeBeforeReversedSublist->next;
-            pos++;
-        }
-        
-        auto* sublistWorkingPtr = nodeBeforeReversedSublist->next;
-        while(start < end) {
-            // cut the new node out
-            auto* nodeComingToSublistFront = sublistWorkingPtr->next;
-            sublistWorkingPtr->next = nodeComingToSublistFront->next;
-            
-            // pasting it at the front
-            nodeComingToSublistFront->next = nodeBeforeReversedSublist->next;
-            nodeBeforeReversedSublist->next = nodeComingToSublistFront;
-            start++;
-        }
-        return dummyHead.next;
-    }
+   ListNode* reverseBetween(ListNode* head, int m, int n) {
+       ListNode *dummy = new ListNode(), *pre = dummy, *cur;
+       dummy -> next = head;
+       for (int i = 0; i < m - 1; i++) {
+           pre = pre -> next;
+       }
+       cur = pre -> next;
+       for (int i = 0; i < n - m; i++) {
+           ListNode* temp = pre -> next;
+           pre -> next = cur -> next;
+           cur -> next = cur -> next -> next;
+           pre -> next -> next = temp;
+       }
+       return dummy -> next;
+   }
 };
