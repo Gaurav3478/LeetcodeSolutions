@@ -1,8 +1,27 @@
 vector<vector<int>> adj;
 vector<int> indegree;
+vector<bool> vis;
+vector<bool> helper;
 
 class Solution {
 public:
+    bool checkCycle(int v) {
+        vis[v] = true;
+        helper[v] = true;
+        for(auto it: adj[v]) {
+            if(!vis[it]) {
+                if(checkCycle(it)) {
+                    return true;
+                }
+            }
+            else if(helper[it]) {
+                return true;
+            }
+        }
+        helper[v] = false;
+        return false;
+    }
+    
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
         //check for cycle
         int n = numCourses;
@@ -13,35 +32,16 @@ public:
             int b = p[1];
             adj[b].push_back(a);
         }
+        vis = vector<bool>(n, false);
+        helper = vector<bool>(n, false);
         for(int i=0; i<n; i++) {
-            for(auto it: adj[i]) {
-                indegree[it]++;
-            }
-        }
-        queue<int> Q;
-        for(int i=0; i<n; i++) {
-            if(indegree[i] == 0) {
-                Q.push(i);
-            }
-        }
-        if(Q.empty()) {
-            return false;
-        }
-        int cnt = 0;
-        while(!Q.empty()) {
-            int node = Q.front();
-            Q.pop();
-            cnt++;
-            for(auto it: adj[node]) {
-                indegree[it]--;
-                if(indegree[it] == 0) {
-                    Q.push(it);
+            if(!vis[i]) {
+                if(checkCycle(i)) {
+                    return false;
                 }
             }
         }
-        if(cnt == n) {
-            return true;
-        }
-        return false;
+        return true;
+        
     }
 };
