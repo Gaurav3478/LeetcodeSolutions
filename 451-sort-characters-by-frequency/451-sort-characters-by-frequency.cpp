@@ -17,9 +17,7 @@ public:
             //frequency is first, character is second
             char c = p.second;
             int f = p.first;
-            for(int i=0; i<f; i++) {
-                ans += c;
-            }
+            ans += string(f, c);
         }
         return ans;
     }
