@@ -6,10 +6,6 @@ public:
     
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
         sort(points.begin(), points.end(), cmp);
-        vector<vector<int>> ans;
-        for(int i=0; i<k; i++) {
-            ans.push_back(points[i]);
-        }
-        return ans;
+        return vector<vector<int>>(points.begin(), points.begin() + k);
     }
 };
