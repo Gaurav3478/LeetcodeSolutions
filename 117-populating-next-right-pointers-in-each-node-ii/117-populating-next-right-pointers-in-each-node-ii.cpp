@@ -43,7 +43,7 @@ public:
                 parent = parent->next;
             }
             parent = childHead;
-            childHead = child = NULL;
+            childHead = NULL;
         }
         return root;
     }
