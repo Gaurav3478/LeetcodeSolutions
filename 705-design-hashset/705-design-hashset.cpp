@@ -1,20 +1,32 @@
 class MyHashSet {
+private:
+    int numBuckets;
+    vector<vector<int>> buckets;
 public:
-    vector<bool> hs;
     MyHashSet() {
-        hs = vector<bool>(1e6 + 1, false);
+        numBuckets = 15000;
+        buckets = vector<vector<int>>(numBuckets);
     }
     
     void add(int key) {
-        hs[key] = true;
+        int bucket = key%numBuckets;
+        buckets[bucket].push_back(key);
     }
     
     void remove(int key) {
-        hs[key] = false;
+        int bucket = key%numBuckets;
+        buckets[bucket].erase(std::remove(buckets[bucket].begin(), buckets[bucket].end(), key), buckets[bucket].end());
+        // vec.erase(std::remove(vec.begin(), vec.end(), 8), vec.end());
     }
     
     bool contains(int key) {
-        return hs[key]==true;
+        int bucket = key%numBuckets;
+        for(int i=0; i<buckets[bucket].size(); i++) {
+            if(buckets[bucket][i] == key) {
+                return true;
+            }
+        }
+        return false;
     }
 };
 
