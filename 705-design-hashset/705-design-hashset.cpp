@@ -2,6 +2,11 @@ class MyHashSet {
 private:
     int numBuckets;
     vector<vector<int>> buckets;
+    
+    int hash_function(int key) {
+        return key%numBuckets;
+    }
+    
 public:
     MyHashSet() {
         numBuckets = 15000;
@@ -9,24 +14,26 @@ public:
     }
     
     void add(int key) {
-        int bucket = key%numBuckets;
-        buckets[bucket].push_back(key);
+        int i = hash_function(key);
+        if(find(buckets[i].begin(), buckets[i].end(), key) == buckets[i].end()) {
+            buckets[i].push_back(key);
+        }
     }
     
     void remove(int key) {
-        int bucket = key%numBuckets;
-        buckets[bucket].erase(std::remove(buckets[bucket].begin(), buckets[bucket].end(), key), buckets[bucket].end());
-        // vec.erase(std::remove(vec.begin(), vec.end(), 8), vec.end());
+        int i = hash_function(key);
+        auto it = find(buckets[i].begin(), buckets[i].end(), key);
+        if(it != buckets[i].end()) {
+            buckets[i].erase(it); 
+        }
     }
     
     bool contains(int key) {
-        int bucket = key%numBuckets;
-        for(int i=0; i<buckets[bucket].size(); i++) {
-            if(buckets[bucket][i] == key) {
-                return true;
-            }
+        int i = hash_function(key);
+        if(find(buckets[i].begin(), buckets[i].end(), key) == buckets[i].end()) {
+            return false;
         }
-        return false;
+        return true;
     }
 };
 
