@@ -9,59 +9,45 @@ class Solution
     public:
     //Function to find the smallest window in the string s consisting
     //of all the characters of string p.
-    string smallestWindow (string s, string t)
+    string smallestWindow (string s, string p)
     {
         // Your code here
-        int m[256] = { 0 };
- 
-    // Answer
-    int ans = INT_MAX; // length of ans
-    int start = 0; // starting index of ans
-    int count = 0;
-   
-    // creating map
-    for (int i = 0; i < t.length(); i++) {
-        if (m[t[i]] == 0)
-            count++;
-        m[t[i]]++;
-    }
- 
-    // References of Window
-    int i = 0;
-    int j = 0;
- 
-    // Traversing the window
-    while (j < s.length()) {
-        // Calculations
-        m[s[j]]--;
-        if (m[s[j]] == 0)
-            count--;
- 
-        // Condition matching
-        if (count == 0) {
-            while (count == 0) {
-                // Sorting ans
-                if (ans > j - i + 1) {
-                    ans = min(ans, j - i + 1);
-                    start = i;
-                }
-                // Sliding I
-                // Calculation for removing I
- 
-                m[s[i]]++;
-                if (m[s[i]] > 0)
-                    count++;
- 
-                i++;
-            }
+        int n = s.size(), v = p.size();
+        //need to use sliding window technique
+        map<char, int> m;
+        int ans = INT_MAX; // length of ans
+        int start = -1; // starting index of ans
+        int count = 0;
+        for (int i = 0; i <v; i++) {
+            if (m[p[i]] == 0)
+                count++;
+            m[p[i]]++;
         }
-        j++;
-    }
- 
-    if (ans != INT_MAX)
-        return s.substr(start, ans);
-    else
-        return "-1";
+        int i = 0, j = 0;
+        while(j < n) {
+            m[s[j]]--;
+            if(m[s[j]] == 0) {
+                count--;
+            }
+            if(count == 0) {
+                while(count == 0) {
+                    if(j - i + 1 < ans) {
+                        ans = j - i + 1;
+                        start = i;
+                    }
+                    m[s[i]]++;
+                    if(m[s[i]] > 0) {
+                        count++;
+                    }
+                    i++;
+                }
+            }
+            j++;
+        }
+        if (start == -1)
+            return "-1";
+        else
+            return s.substr(start, ans);
     }
 };
 
