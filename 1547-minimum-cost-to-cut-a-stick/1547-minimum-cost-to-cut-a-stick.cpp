@@ -19,7 +19,7 @@ public:
             }
         }
         for(int i=sz-2; i>=1; i--) {
-            for(int j=1; j<=sz-2; j++) {
+            for(int j=i; j<=sz-2; j++) {
                 for(int k=i; k<=j; k++) {
                     dp[i][j] = min(dp[i][j], vect[j+1] - vect[i-1] + dp[i][k-1] + 
                 dp[k+1][j]);
