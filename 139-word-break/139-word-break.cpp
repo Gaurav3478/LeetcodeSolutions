@@ -11,7 +11,6 @@ public:
                     for(auto it: wordDict) {
                         if(it == temp) {
                             dp[i] = true;
-                            break;
                         }
                     }
                 }
