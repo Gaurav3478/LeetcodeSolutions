@@ -8,15 +8,15 @@ public:
             if(vect[i] + matchsticks[idx] > sideLength) {
                 continue;
             }
-            int j = i;
-            while(--j >= 0) {
-                if(vect[i] == vect[j]) {
-                    break;
-                }
-            }
-            if(j != -1) {
-                continue;
-            }
+            // int j = i;
+            // while(--j >= 0) {
+            //     if(vect[i] == vect[j]) {
+            //         break;
+            //     }
+            // }
+            // if(j != -1) {
+            //     continue;
+            // }
             vect[i] += matchsticks[idx];
             if(solve(matchsticks, vect, sideLength, idx + 1)) {
                 return true;
