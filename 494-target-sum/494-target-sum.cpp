@@ -1,43 +1,32 @@
 class Solution {
 public:
-    int findWays(vector<int> &nums, int tar) {
-    int n = nums.size();
-    vector<vector<int>> dp(n, vector<int>(tar+1, 0));
-    if(nums[0] == 0) {
-        dp[0][0] = 2;
-    }
-    else {
-        dp[0][0] = 1;
-    }
-    if(nums[0] != 0 && nums[0] <= tar) {
-        dp[0][nums[0]] = 1;
-    }
-    for(int ind=1; ind<n; ind++) {
-        for(int sum=0; sum<=tar; sum++) {
-            int notTake = dp[ind-1][sum];
-            int take = 0;
-            if(nums[ind] <= sum) {
-                take = dp[ind-1][sum-nums[ind]];
+    int solve(int i, int currSum, int target, vector<vector<int>> &dp, vector<int> &nums) {
+        if(i == nums.size()) {
+            if(currSum == target) {
+                return 1;
             }
-            dp[ind][sum] = notTake + take;
+            else {
+                return 0;
+            }
         }
+        if(dp[i][currSum + 1000] != -1) {
+            return dp[i][currSum + 1000];
+        }
+        int val = 0;
+        val = solve(i + 1, currSum + nums[i], target, dp, nums);
+        val += solve(i + 1, currSum - nums[i], target, dp, nums);
+        return dp[i][currSum + 1000] = val;
     }
-    return dp[n-1][tar];
-}
-
-int countPartitions(int n, int d, vector<int> &arr) {
-    int totSum = 0;
-    for(auto &it: arr) {
-        totSum += it;
+    
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int currSum = 0;
+        int idx = 0;
+        int n = nums.size();
+        int sum = 0;
+        for(int i=0; i<n; i++) {
+            sum += nums[i];
+        }
+        vector<vector<int>> dp(n, vector<int>(2001, -1));
+        return solve(idx, currSum, target, dp, nums);
     }
-    if(totSum - d < 0 || (totSum-d)%2) {
-        return false;
-    }
-    return findWays(arr, (totSum - d)/2);
-}
-
-int findTargetSumWays(vector<int>& nums, int target) {
-    int n = nums.size();
-    return countPartitions(n, target, nums);        
-}
 };
