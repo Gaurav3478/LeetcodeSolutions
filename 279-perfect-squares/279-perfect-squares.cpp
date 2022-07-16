@@ -16,7 +16,7 @@ public:
             for(int j=1; j<=n; j++) {
                 int donttake = dp[i-1][j];
                 int take = INT_MAX;
-                if(j >= perfectSquares[i] && dp[i][j - perfectSquares[i]] != -1) {
+                if(j >= perfectSquares[i]) {
                     take = 1 + dp[i][j - perfectSquares[i]];
                 }
                 dp[i][j] = min(take, donttake);
