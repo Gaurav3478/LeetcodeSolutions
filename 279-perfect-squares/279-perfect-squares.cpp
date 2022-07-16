@@ -6,14 +6,11 @@ public:
             perfectSquares.push_back(i*i);
         }
         int sz = perfectSquares.size();
-        vector<vector<int>> dp(sz, vector<int>(n+1, -1));
+        vector<vector<int>> dp(sz, vector<int>(n+1, 0));
         for(int i=1; i<=n; i++) {
             if(i%perfectSquares[0] == 0) {
                 dp[0][i] = i/perfectSquares[0];
             }
-        }
-        for(int i=0; i<sz; i++) {
-            dp[i][0] = 0;
         }
         for(int i=1; i<sz; i++) {
             for(int j=1; j<=n; j++) {
@@ -25,13 +22,6 @@ public:
                 dp[i][j] = min(take, donttake);
             }
         }
-        // for(auto it: dp) {
-        //     for(auto jt: it) {
-        //         cout << jt << " ";
-        //     }
-        //     cout << endl;
-        // }
-        // cout << endl;
         return dp[sz-1][n];
     }
 };
