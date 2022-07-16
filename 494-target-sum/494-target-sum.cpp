@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int solve(int i, int currSum, int target, vector<vector<int>> &dp, vector<int> &nums) {
+    int solve(int i, int currSum, int target, map<pair<int, int>, int> &dp, vector<int> &nums) {
         if(i == nums.size()) {
             if(currSum == target) {
                 return 1;
@@ -9,13 +9,13 @@ public:
                 return 0;
             }
         }
-        if(dp[i][currSum + 1000] != -1) {
-            return dp[i][currSum + 1000];
+        if(dp.find({i, currSum}) != dp.end()) {
+            return dp[{i, currSum}];
         }
         int val = 0;
         val = solve(i + 1, currSum + nums[i], target, dp, nums);
         val += solve(i + 1, currSum - nums[i], target, dp, nums);
-        return dp[i][currSum + 1000] = val;
+        return dp[{i, currSum}] = val;
     }
     
     int findTargetSumWays(vector<int>& nums, int target) {
@@ -26,7 +26,7 @@ public:
         for(int i=0; i<n; i++) {
             sum += nums[i];
         }
-        vector<vector<int>> dp(n, vector<int>(2001, -1));
+        map<pair<int, int>, int> dp;
         return solve(idx, currSum, target, dp, nums);
     }
 };
