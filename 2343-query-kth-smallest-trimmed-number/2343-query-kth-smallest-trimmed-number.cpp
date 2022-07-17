@@ -1,38 +1,41 @@
 class Solution {
 public:
-    static bool cmp(pair<string, int> &a, pair<string, int> &b) {
-        if (a.first.size() == b.first.size()) {
-            if(a.first == b.first) {
-                return a.second < b.second;
+    
+    
+    vector<int> smallestTrimmedNumbers(vector<string>& nums, vector<vector<int>>& q) {
+        
+        vector<pair<string,int >>v;
+        
+        vector<int >ans;
+        
+        
+        for( int  i=0; i<q.size() ; i++){
+            
+             v.clear();
+            
+            int  len = q[i][1];
+            int  idx = q[i][0];
+            int  cnt=0;
+            
+            for( auto i : nums){
+           
+                int leng=i.length();
+            
+                                
+                v.push_back({i.substr(leng-len,len),cnt++});
+                
             }
-            return a.first < b.first;
+            
+          
+            sort(v.begin(),v.end());
+            
+            ans.push_back(v[idx-1].second);
+            
+            
         }
-        else {
-            return a.first.size() < b.first.size();
-        }
-    }
-
-    vector<int> smallestTrimmedNumbers(vector<string>& nums, vector<vector<int>>& queries) {
-        int n = nums.size();
-        int q = queries.size();
-        int len = nums[0].size();
-        vector<int> ans(q);
-        vector<pair<string, int>> vect;
-        for(int i=0; i<n; i++) {
-            vect.push_back({nums[i], i});
-        }
-        for(int i=0; i<q; i++) {
-            int k = queries[i][0];
-            int trim = queries[i][1];
-            nth_element(vect.begin(), vect.begin() + k - 1, vect.end(), [&](pair<string, int> &a, pair<string, int> &b) {
-                int cmp = a.first.compare(len - trim, trim, b.first, len - trim, trim);
-                if(cmp == 0) {
-                    return a.second < b.second;
-                }
-                return cmp < 0;
-            });
-            ans[i] = vect[k-1].second;
-        }
+        
         return ans;
+        
+        
     }
 };
