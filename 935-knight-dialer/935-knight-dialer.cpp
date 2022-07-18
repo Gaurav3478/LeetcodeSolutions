@@ -17,9 +17,6 @@ public:
         if(n == 1) {
             return 1;
         }
-        if(n < 0) {
-            return 0;
-        }
         if(dp[i][j][n] != -1) {
             return dp[i][j][n];
         }
