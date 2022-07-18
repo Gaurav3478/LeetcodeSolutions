@@ -1,14 +1,13 @@
 class Solution {
 public:
     const int MOD = (int) 1e9 + 7;
-    int dx[8] = {1, 1, -1, -1, 2, 2, -2, -2}; 
-    int dy[8] = {2, -2, 2, -2, 1, -1, 1, -1}; 
+    vector<vector<int>> directions = {{-2, -1}, {-2, 1}, {-1, 2}, {1, 2}, {2, 1}, {2, -1}, {-1, -2}, {1, -2}}; 
 
-    bool isValid(int x, int y) {
-        if(x == 3 and (y == 0 or y == 2)) return false; 
-        if(x < 0 or x > 3) return false; 
-        if(y < 0 or y > 2) return false; 
-        return true; 
+    bool isValid(int i, int j) {
+        if(min(i, j) < 0 || i >= 4 || j >= 3 || (i == 3 && j != 1)) {
+            return false;
+        }
+        return true;
     }
     
     int solve(int i, int j, int n, vector<vector<vector<int>>> &dp) {
@@ -25,11 +24,11 @@ public:
             return dp[i][j][n];
         }
         int val = 0;
-        for(int k = 0; k < 8; k++) {
-            int x = i + dx[k]; 
-            int y = j + dy[k]; 
-            if(isValid(x, y)) {
-                val = (val % MOD + solve(x, y, n - 1, dp) % MOD) % MOD; 
+        for(int k=0; k<8; k++) {
+            int nr = i + directions[k][0];
+            int nc = j + directions[k][1];
+            if(isValid(nr, nc)) {
+                val = (val%MOD + solve(nr, nc, n-1, dp)%MOD)%MOD;
             }
         }
         return dp[i][j][n] = val%MOD;
