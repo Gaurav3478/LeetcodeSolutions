@@ -29,9 +29,7 @@ public:
             int v2 = directions[k][1];
             int nr = i + v1;
             int nc = j + v2;
-            if(isValid(nr, nc)) {
-                val = (val%MOD + solve(nr, nc, n-1, dp)%MOD)%MOD;
-            }
+            val = (val%MOD + solve(nr, nc, n-1, dp)%MOD)%MOD;
         }
         return dp[i][j][n] = val%MOD;
     }
