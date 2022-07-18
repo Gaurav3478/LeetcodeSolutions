@@ -25,8 +25,10 @@ public:
         }
         int val = 0;
         for(int k=0; k<8; k++) {
-            int nr = i + directions[k][0];
-            int nc = j + directions[k][1];
+            int v1 = directions[k][0];
+            int v2 = directions[k][1];
+            int nr = i + v1;
+            int nc = j + v2;
             if(isValid(nr, nc)) {
                 val = (val%MOD + solve(nr, nc, n-1, dp)%MOD)%MOD;
             }
