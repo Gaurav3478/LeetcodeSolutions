@@ -1,45 +1,49 @@
 class Solution {
 public:
-    const int mod = (int) 1e9 + 7; 
-    
+    const int MOD = (int) 1e9 + 7;
     int dx[8] = {1, 1, -1, -1, 2, 2, -2, -2}; 
     int dy[8] = {2, -2, 2, -2, 1, -1, 1, -1}; 
-    
-    bool safe(int x, int y) {
+
+    bool isValid(int x, int y) {
         if(x == 3 and (y == 0 or y == 2)) return false; 
         if(x < 0 or x > 3) return false; 
         if(y < 0 or y > 2) return false; 
         return true; 
     }
     
-    int f(int x, int y, int n, vector<vector<vector<int>>>& dp) {
-        if(!safe(x, y)) return 0;
-        if(n == 1) return 1;
-        if(n < 0) return 0; 
-        
-        if(dp[x][y][n] != -1) return dp[x][y][n]; 
-        
-        int cnt = 0;
-        
+    int solve(int i, int j, int n, vector<vector<vector<int>>> &dp) {
+        if(!isValid(i, j)) {
+            return 0;
+        }
+        if(n == 1) {
+            return 1;
+        }
+        if(n < 0) {
+            return 0;
+        }
+        if(dp[i][j][n] != -1) {
+            return dp[i][j][n];
+        }
+        int val = 0;
         for(int k = 0; k < 8; k++) {
-            int i = x + dx[k]; 
-            int j = y + dy[k]; 
-            if(safe(i, j)) {
-                cnt = (cnt % mod + f(i, j, n - 1, dp) % mod) % mod; 
+            int x = i + dx[k]; 
+            int y = j + dy[k]; 
+            if(isValid(x, y)) {
+                val = (val % MOD + solve(x, y, n - 1, dp) % MOD) % MOD; 
             }
         }
-        return dp[x][y][n] = cnt % mod; 
+        return dp[i][j][n] = val%MOD;
     }
     
     int knightDialer(int n) {
-        int cnt = 0; 
-        vector<vector<vector<int>>> dp(4, vector<vector<int>>(3, vector<int>(n + 1,-1))); 
-        
-        for(int i = 0; i < 4; i++) {
-            for(int j = 0; j < 3; j++) {
-                cnt = (cnt % mod + f(i, j, n, dp) % mod) % mod; 
+        //we know our grid is effectively 4 rows and 3 columns, except the fourth row 1st column and fourth row 3rd column are not part of this grid
+        int ans = 0;
+        vector<vector<vector<int>>> dp(4, vector<vector<int>>(3, vector<int>(n+1, -1)));
+        for(int i=0; i<4; i++) {
+            for(int j=0; j<3; j++) {
+                ans = (ans%MOD + solve(i, j, n, dp)%MOD)%MOD;
             }
         }
-        return cnt % mod; 
+        return ans%MOD;
     }
 };
