@@ -24,14 +24,12 @@ public:
             return dp[i][j][n];
         }
         int val = 0;
-        for(int k=0; k<8; k++) {
-            int v1 = directions[k][0];
-            int v2 = directions[k][1];
-            int nr = i + v1;
-            int nc = j + v2;
-            val = (val%MOD + solve(nr, nc, n-1, dp)%MOD)%MOD;
+        for(auto &dir: directions) {
+            int nr = i + dir[0];
+            int nc = j + dir[1];
+            val = (val + solve(nr, nc, n-1, dp))%MOD;
         }
-        return dp[i][j][n] = val%MOD;
+        return dp[i][j][n] = val;
     }
     
     int knightDialer(int n) {
@@ -40,9 +38,9 @@ public:
         vector<vector<vector<int>>> dp(4, vector<vector<int>>(3, vector<int>(n+1, -1)));
         for(int i=0; i<4; i++) {
             for(int j=0; j<3; j++) {
-                ans = (ans%MOD + solve(i, j, n, dp)%MOD)%MOD;
+                ans = (ans + solve(i, j, n, dp))%MOD;
             }
         }
-        return ans%MOD;
+        return ans;
     }
 };
