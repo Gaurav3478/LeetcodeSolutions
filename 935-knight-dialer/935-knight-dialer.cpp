@@ -1,6 +1,6 @@
 class Solution {
 public:
-    const int MOD = (int) 1e9 + 7;
+    const int MOD = 1e9 + 7;
     vector<vector<int>> directions = {{-2, -1}, {-2, 1}, {-1, 2}, {1, 2}, {2, 1}, {2, -1}, {-1, -2}, {1, -2}}; 
 
     bool isValid(int i, int j) {
