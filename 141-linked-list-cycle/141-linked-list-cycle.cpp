@@ -12,15 +12,17 @@ public:
         if(head == NULL) {
             return false;
         } 
-        map<ListNode*, int> mp;
+        set<ListNode*> s;
+        // map<ListNode*, int> mp;
         ListNode *temp = head;
         bool cycle = false;
         while(temp->next != NULL) {
-            if(mp[temp]) {
+            if(s.find(temp) != s.end()) {
                 cycle = true;
                 break;
             }
-            mp[temp]++;
+            // mp[temp]++;
+            s.insert(temp);
             temp = temp->next;
         }
         if(!cycle) {
