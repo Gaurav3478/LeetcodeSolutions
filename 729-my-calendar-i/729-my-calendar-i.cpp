@@ -1,20 +1,24 @@
 class MyCalendar {
 public:
-    vector<pair<int, int>> calendar;
+    set<pair<int, int>> s;
     MyCalendar() {
         
     }
     
     bool book(int start, int end) {
-        for(int i=0; i<calendar.size(); i++) {
-            int st = calendar[i].first, e = calendar[i].second;
-            if(start < e && start >= st || end > st && end <= e || st < end && st >= start || e > start && e <= end) {
-                // cout << start << " " << end << endl;
-                // cout << st << " " << e << endl;
+        auto it = s.upper_bound({start, end});
+        if(it != s.end()) {
+            if((*it).first < end) {
                 return false;
-            }  
+            }
         }
-        calendar.push_back({start, end});
+        if(it != s.begin()) {
+            it--;
+            if(start < (*it).second) {
+                return false;
+            }
+        }
+        s.insert({start, end});
         return true;
     }
 };
