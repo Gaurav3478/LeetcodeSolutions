@@ -16,7 +16,6 @@ public:
         }
         int ans = 0;
         for(int i=0; i<5; i++) {
-            cout << dp[n][i] << " ";
             ans = (ans + dp[n][i])%MOD;
         }
         return ans;
