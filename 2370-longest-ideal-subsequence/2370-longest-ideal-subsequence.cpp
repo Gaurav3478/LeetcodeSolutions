@@ -2,17 +2,19 @@ class Solution {
 public:
     int longestIdealString(string s, int k) {
         int n = s.size();
-        vector<vector<int>> dp(n, vector<int>(26, 0));
-        dp[0][s[0] - 97] = 1;
-        for(int i=1; i<n; i++) {
-            int c_no = s[i] - 97;
-            for(int j=0; j<26; j++) {
-                if(j >= c_no - k && j <= c_no + k) {
-                    dp[i][c_no] = max(dp[i][c_no], dp[i-1][j] + 1);
+        vector<int> dp(26, 0);
+        int ans = 1;
+        for(int i=0; i<n; i++) {
+            char c = s[i];
+            int c_no = c - 97;
+            dp[c_no]++;
+            for(int j=max(0, c_no-k); j<=min(25, c_no+k); j++) {
+                if(j != c_no) {
+                    dp[c_no] = max(dp[c_no], dp[j] + 1);
                 }
-                dp[i][j] = max(dp[i][j], dp[i-1][j]);
             }
+            ans = max(ans, dp[c_no]);
         }
-        return *max_element(dp[n-1].begin(), dp[n-1].end());
+        return ans;
     }
 };
