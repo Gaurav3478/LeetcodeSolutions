@@ -13,12 +13,6 @@ public:
                 dp[i][j] = max(dp[i][j], dp[i-1][j]);
             }
         }
-        // for(auto it: dp) {
-        //     for(auto jt: it) {
-        //         cout << jt << " ";
-        //     }
-        //     cout << endl;
-        // }
         return *max_element(dp[n-1].begin(), dp[n-1].end());
     }
 };
