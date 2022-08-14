@@ -1,45 +1,49 @@
 class Solution {
 public:
-    bool worddif(string &s1,string &s2)
-    {
-        if(s1.length()!=s2.length())
-        {
-            return false;
-        }
-        int c=0;
-        for(int i=0;i<s1.length();i++)
-        {
-            if(s1[i]!=s2[i])
-            {
-                c++;
+    int char_diff(string s1, string s2) {
+        int cnt = 0;
+        for(int i=0; i<s1.size(); i++) {
+            if(s1[i] != s2[i]) {
+                cnt++;
             }
         }
-        return c==1;
+        return cnt;
     }
+    
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-        queue<pair<string,int>> q;
-        q.push({beginWord,1});
-        map<string,int> vis;
-        int ans=INT_MAX;
-        while(!q.empty())
-        {
-            string s=q.front().first;
-            int l=q.front().second;
-            q.pop();
-            for(int i=0;i<wordList.size();i++)
-            {
-                if(worddif(s,wordList[i]) && vis[wordList[i]]==0)
-                {
-                    q.push({wordList[i],l+1});
-                    if(wordList[i]==endWord)
-                    {
-                        ans=min(ans,l+1);
-                        break;
+        queue<string> q;
+        q.push(beginWord);
+        set<string> seen;
+        seen.insert(beginWord);
+        int ans = 1;
+        int n = wordList.size();
+        int len = beginWord.size();
+        set<string> words(wordList.begin(), wordList.end());
+        
+        while(!q.empty()) {
+            int sz = q.size();
+            for(int i=0; i<sz; i++) {
+                string cur_word = q.front();
+                q.pop();
+                
+                if(cur_word == endWord) {
+                    return ans;
+                }
+                
+                for(int idx=0; idx<len; idx++) {
+                    for(char c='a'; c<='z'; c++) {
+                        string wrd = cur_word;
+                        wrd[idx] = c;
+                        if(words.find(wrd) != words.end() && seen.find(wrd) == seen.end()) {
+                            q.push(wrd);
+                            seen.insert(wrd);
+                        }
                     }
-                    vis[wordList[i]]++;
                 }
             }
+            ans++;
         }
-        return ans==INT_MAX?0:ans;
+        
+        return 0;
     }
 };
