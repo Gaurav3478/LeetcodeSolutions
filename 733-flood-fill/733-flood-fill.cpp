@@ -6,14 +6,14 @@ public:
         return min(i, j) >= 0 && i < n && j < m;
     }
     
-    void recurse(int i, int j, int n, int m, vector<vector<int>> &image, vector<vector<bool>> &vis, int startColor, int color) {
+    void dfs(int i, int j, int n, int m, vector<vector<int>> &image, vector<vector<bool>> &vis, int startColor, int color) {
         image[i][j] = color;
         vis[i][j] = true;
         for(auto dir: dirs) {
             int newi = i + dir.first;
             int newj = j + dir.second;
             if(isValid(newi, newj, n, m) && !vis[newi][newj] && image[newi][newj] == startColor) {
-                recurse(newi, newj, n, m, image, vis, startColor, color);
+                dfs(newi, newj, n, m, image, vis, startColor, color);
             } 
         }
     }
@@ -22,7 +22,7 @@ public:
         int n = image.size(), m = image[0].size();
         int startColor = image[sr][sc];
         vector<vector<bool>> vis(n, vector<bool>(m, false));
-        recurse(sr, sc, n, m, image, vis, startColor, color);
+        dfs(sr, sc, n, m, image, vis, startColor, color);
         return image;
     }
 };
