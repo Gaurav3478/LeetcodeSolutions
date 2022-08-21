@@ -7,18 +7,14 @@ public:
     }
     
     void recurse(int i, int j, int n, int m, vector<vector<int>> &image, vector<vector<bool>> &vis, int startColor, int color) {
-        if(isValid(i, j, n, m) && !vis[i][j]) {
-            if(image[i][j] == startColor) {
-                vis[i][j] = true;
-                image[i][j] = color;
-                for(auto dir: dirs) {
-                    int newi = i + dir.first;
-                    int newj = j + dir.second;
-                    if(isValid(newi, newj, n, m)) {
-                        recurse(newi, newj, n, m, image, vis, startColor, color);
-                    } 
-                }
-            }
+        image[i][j] = color;
+        vis[i][j] = true;
+        for(auto dir: dirs) {
+            int newi = i + dir.first;
+            int newj = j + dir.second;
+            if(isValid(newi, newj, n, m) && !vis[newi][newj] && image[newi][newj] == startColor) {
+                recurse(newi, newj, n, m, image, vis, startColor, color);
+            } 
         }
     }
     
