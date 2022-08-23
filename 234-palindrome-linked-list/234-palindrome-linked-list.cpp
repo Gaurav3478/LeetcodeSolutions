@@ -23,7 +23,6 @@ public:
             fast = fast->next->next;
         }
         ListNode *mid = slow->next;
-        bool flag = false;
         ListNode *temp = head;
         string s1 = "", s2 = "";
         while(mid) {
