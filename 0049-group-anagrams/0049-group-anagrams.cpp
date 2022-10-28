@@ -13,11 +13,7 @@ public:
         
         
         for(auto it: mp) {
-            vector<string> temp;
-            for(auto ele: it.second) {
-                temp.push_back(ele);
-            }
-            ans.push_back(temp);
+            ans.push_back(it.second);
         } 
         
         return ans;
