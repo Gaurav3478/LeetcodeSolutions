@@ -11,21 +11,21 @@ public:
             mp[nums[i]].push_back(i);
         }
         
-        ordered_set<int> os;
         vector<int> ans(n);
-        for(auto [num, vect]: mp) {
-            for(auto &idx: vect) {
-                int k = os.order_of_key(idx + 1);
-                if(os.size() - k >= 2) {
-                    int val = *os.find_by_order(k + 1);
-                    ans[idx] = nums[val]; 
+        set<int> seen_indexes;
+        for(auto [i, vect]: mp) {
+            for(auto j: vect) {
+                auto it = seen_indexes.upper_bound(j);
+                if(it != seen_indexes.end() && ++it != seen_indexes.end()) {
+                    ans[j] = nums[*it];
                 }
                 else {
-                    ans[idx] = -1;
+                    ans[j] = -1;
                 }
             }
-            for(auto idx: vect) {
-                os.insert(idx);
+                
+            for(auto j: vect) {
+                seen_indexes.insert(j);
             }
         }
         
