@@ -7,37 +7,39 @@ public:
         //row, column, length of path, best remaining k
         Q.push({0, 0, 0, k});
         while(!Q.empty()) {
-            auto t = Q.front();
-            int r = t[0], c = t[1];
+            int r = Q.front()[0];
+            int c = Q.front()[1];
+            int pathLen = Q.front()[2];
+            int remaining_k = Q.front()[3];
             Q.pop();
+            
+            if(r == n - 1 && c == m - 1) {
+                return pathLen;
+            }
             
             if(min(r, c) < 0 || r >= n || c >= m) {
                 continue;
             }
             
-            if(r == n - 1 && c == m - 1) {
-                return t[2];
-            }
-            
             if(grid[r][c] == 1) {
-                if(t[3] >= 1) {
-                    t[3]--;
+                if(remaining_k >= 1) {
+                    remaining_k--;
                 }
                 else {
                     continue;
                 }
             }
             
-            if(vis[r][c] != -1 && vis[r][c] >= t[3]) {
-                continue;
+            if(vis[r][c] != -1 && remaining_k <= vis[r][c]) {
+                    continue;
             }
-
-            vis[r][c] = t[3];
             
-            Q.push({r + 1, c, t[2] + 1, t[3]});
-            Q.push({r - 1, c, t[2] + 1, t[3]});
-            Q.push({r, c + 1, t[2] + 1, t[3]});
-            Q.push({r, c - 1, t[2] + 1, t[3]});
+            vis[r][c] = remaining_k;
+            
+            Q.push({r + 1, c, pathLen + 1, remaining_k});
+            Q.push({r, c + 1, pathLen + 1, remaining_k});
+            Q.push({r - 1, c, pathLen + 1, remaining_k});
+            Q.push({r, c - 1, pathLen + 1, remaining_k});
         }
         return -1;
     }
