@@ -30,11 +30,18 @@ public:
                 }
             }
             
-            if(vis[r][c] != -1 && remaining_k <= vis[r][c]) {
+            if(vis[r][c] != -1) {
+                //this cell has been visited before
+                if(remaining_k > vis[r][c]) {
+                    vis[r][c] = remaining_k;
+                }
+                else {
                     continue;
+                }
             }
-            
-            vis[r][c] = remaining_k;
+            else {
+                vis[r][c] = remaining_k;
+            }
             
             Q.push({r + 1, c, pathLen + 1, remaining_k});
             Q.push({r, c + 1, pathLen + 1, remaining_k});
