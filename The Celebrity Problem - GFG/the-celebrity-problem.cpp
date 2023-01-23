@@ -13,28 +13,36 @@ class Solution
     //Function to find if there is a celebrity in the party or not.
     int celebrity(vector<vector<int> >& M, int n) 
     {
-        // code here 
-        for(int i = 0; i < n; i++) {
-            //for each column for each row
-            int knownTo = 0, knows = 0;
-            for(int j = 0; j < n; j++) {
-                if(j == i) {
-                    continue;
-                }
-                knownTo += M[j][i];
-            }
-            for(int j = 0; j < n; j++) {
-                if(j == i) {
-                    continue;
-                }
-                knows += M[i][j];
-            }
-            
-            if(knows == 0 && knownTo == n - 1) {
-                return i;
+        // code here
+        int potentialRow = 0;
+        for(int i = 1; i < n; i++) {
+            if(M[potentialRow][i] == 1) {
+                potentialRow = i;
             }
         }
         
+        int knows = 0, knownTo = 0;
+        for(int i = 0; i < n; i++) {
+            if(i == potentialRow) {
+                continue;
+            }
+            if(M[potentialRow][i] == 1) {
+                knows++;
+            }
+        }
+        
+        for(int i = 0; i < n; i++) {
+            if(i == potentialRow) {
+                continue;
+            }
+            if(M[i][potentialRow] == 1) {
+                knownTo++;
+            }
+        }
+        
+        if(knownTo == n - 1 && knows == 0) {
+            return potentialRow;
+        }
         return -1;
     }
 };
