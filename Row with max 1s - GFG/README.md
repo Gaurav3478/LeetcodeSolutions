@@ -31,7 +31,7 @@ indexing).
 You don't need to read input or print anything. Your task is to complete the function&nbsp;<strong>rowWithMax1s()</strong>&nbsp;which takes the array of booleans&nbsp;<strong>arr[][],</strong><strong>&nbsp;n </strong>and <strong>m&nbsp;</strong>as input parameters and returns the 0-based index of the first row that has the most number of 1s. If no such&nbsp;row exists, return -1.</span><br>
 &nbsp;</p>
 
-<p><span style="font-size:18px"><strong>Expected Time Complexity:</strong>&nbsp;O(N+M)<br>
+<p><span style="font-size:18px"><strong>Expected Time Complexity:</strong>&nbsp;O(Nlog(M))<br>
 <strong>Expected Auxiliary Space:</strong>&nbsp;O(1)</span></p>
 
 <p><br>
