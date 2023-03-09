@@ -8,13 +8,12 @@ class Solution{
 public:
 	int rowWithMax1s(vector<vector<int> > arr, int n, int m) {
 	    // code here
-	    int row = 0;
-	    int col = m - 1;
+	    int row = 0, col = m - 1;
 	    int ans = -1;
-	    while(col >= 0 && row < n) {
+	    while(row < n && col >= 0) {
 	        if(arr[row][col] == 1) {
-	            col--;
 	            ans = row;
+	            col--;
 	        }
 	        else {
 	            row++;
