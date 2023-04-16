@@ -6,19 +6,30 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    int minimizeCost(vector<int>& height, int n, int k) {
-        // Code here
-        vector<int> dp(n, INT_MAX);
-        dp[0] = 0;
-        for(int i = 0; i < n; i++) {
-            for(int j = i; j <= min(n - 1, i + k); j++) {
-                dp[j] = min(dp[j], dp[i] + abs(height[j] - height[i]));
+    int solve(vector<int> &height,int n, int k,int *dp){
+                if(n==0)
+        return 0;
+        
+        if(dp[n]!=-1)
+        return dp[n];
+        int ans=INT_MAX;
+        for(int i=1;i<=k;i++){
+            int temp;
+            if(n>=i){
+              temp= solve(height,n-i,k,dp)+abs(height[n-i]-height[n]);
+            
             }
+            ans=min(ans,temp);
         }
-        // for(auto it: dp) {
-        //     cout << it << " ";
-        // }
-        return dp[n - 1];
+        
+        return dp[n]=ans;
+    }
+    int minimizeCost(vector<int>& height, int n, int k) {
+
+        int dp[n+1];
+        memset(dp,-1,sizeof(dp));
+        
+        return solve(height,n-1,k,dp);
     }
 };
 
