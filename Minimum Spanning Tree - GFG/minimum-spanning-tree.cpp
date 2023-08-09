@@ -24,7 +24,9 @@ class Solution
             sum += wt;
             vis[node] = true;
             for(auto ch: adj[node]) {
-                pq.push({ch[1], ch[0]});
+                if(!vis[ch[0]]) {
+                    pq.push({ch[1], ch[0]});    
+                }
             }
         }
         return sum;
